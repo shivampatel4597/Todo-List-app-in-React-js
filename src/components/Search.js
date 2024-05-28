@@ -18,6 +18,7 @@ export const Search = ({ addTodo, editTodo, editIndex, currentTodo }) => {
     if (editIndex !== null) {
       console.log('Edit Index:', editIndex);
       editTodo(inputValue, editIndex);
+      setInputValue("")
     } else if (inputValue.trim() !== '') {
       addTodo(inputValue);
       setInputValue('');
@@ -44,7 +45,7 @@ export const Search = ({ addTodo, editTodo, editIndex, currentTodo }) => {
           className='h-10 w-[100%] lg:w-[80%] px-8 bg-gray-100 rounded-[20px] outline-none'
         />
         <button onClick={addList} className='text-white text-lg lg:text-2xl px-5 py-2 bg-[#141437] font-bold hover:bg-white hover:text-black rounded-md'>
-          Add
+          {(editIndex!==null)? "Update":"Add"}
         </button>
       </div>
     </div>
