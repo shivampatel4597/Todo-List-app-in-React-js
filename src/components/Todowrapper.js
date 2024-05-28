@@ -4,18 +4,21 @@ import { Search } from './Search'
 import { useState } from 'react'
 export const Todowrapper = () => {
   let [todoItem, setTodoItem] = useState([])
+  let [currentTodo, setCurrentTodo] = useState('')
+  let [editIndex, setEditIndex] = useState(null);
 
   function addTodo(text){
     setTodoItem([...todoItem,{item:text, completed:false}])
     console.log(todoItem)
   }
-  const editTodo = (index) => {
-    const newItem = prompt('Edit your todo item:',);
-    if (newItem) {
-      const newTodos = [...todoItem];
-      newTodos[index].item = newItem;
-      setTodoItem(newTodos);
-    }
+
+  const editTodo = (text, index) => {
+    const updatedTodos = todoItem.map((item, idx) =>
+      index === idx ? { ...item, item: text } : item
+    );
+    setTodoItem(updatedTodos);
+    setEditIndex(null);
+    setCurrentTodo('');
   };
 
   function removeTodo(index){
@@ -29,9 +32,9 @@ export const Todowrapper = () => {
   return (
     <>
     <div className=''>
-     <Search addTodo={addTodo}/>
-    <div className='py-6 h-[530px]  px-10 bg-[#141437] overflow-y-auto'>
-   <List  todoItem={todoItem} editTodo={editTodo} removeTodo={removeTodo} />
+     <Search addTodo={addTodo} editTodo={editTodo} editIndex={editIndex} currentTodo={currentTodo}/>
+    <div className='py-6 h-[530px] px-5 lg:px-10 bg-[#141437] overflow-y-auto'>
+   <List  todoItem={todoItem} setEditIndex={setEditIndex}  setCurrentTodo={setCurrentTodo} removeTodo={removeTodo} />
    
    </div>
 
